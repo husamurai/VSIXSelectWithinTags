@@ -6,12 +6,6 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Globalization;
-using Task = System.Threading.Tasks.Task;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SelectLTHashHashGT
 {
@@ -22,7 +16,7 @@ namespace SelectLTHashHashGT
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
         }
-        public Selector(AsyncPackage package, string startTag, string endTag) : base(startTag, endTag) 
+        public Selector(AsyncPackage package, string startTag, string endTag) : base(startTag, endTag)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
         }
@@ -101,7 +95,8 @@ namespace SelectLTHashHashGT
 
             return null; // No matching end tag found
         }
-        static string alpabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        private static string alpabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         private string GetStartOfWord(IWpfTextView textView)
         {
@@ -111,7 +106,7 @@ namespace SelectLTHashHashGT
             var lineText = line.GetText();
             int x = bp.Position - line.Start.Position;
             string betas = alpabet.ToLower();
-            while (x > 0 && (alpabet.IndexOf(lineText[x - 1]) > -1) || betas.IndexOf(lineText[x - 1]) > -1 )
+            while (x > 0 && (alpabet.IndexOf(lineText[x - 1]) > -1) || betas.IndexOf(lineText[x - 1]) > -1)
                 x--;
             int y = x;
             while (y >= 0 && y < lineText.Length && (alpabet.IndexOf(lineText[y]) > -1) || betas.IndexOf(lineText[y]) > -1)
@@ -119,7 +114,7 @@ namespace SelectLTHashHashGT
             //0123456789
             //01Z3456789
             if (y > x)
-                sw = lineText.Substring(x,y - x);
+                sw = lineText.Substring(x, y - x);
 
             if (x > 0)
                 x--;
@@ -139,7 +134,7 @@ namespace SelectLTHashHashGT
             }
             else
             {
-                StartTag = string.Concat('<', sp,' ');
+                StartTag = string.Concat('<', sp, ' ');
                 EndTag = string.Concat('/', sp, '>');
             }
         }

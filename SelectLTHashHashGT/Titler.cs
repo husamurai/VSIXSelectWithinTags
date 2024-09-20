@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.Shell;
-
-namespace SelectLTHashHashGT
+﻿namespace SelectLTHashHashGT
 {
     internal class Titler
     {
@@ -19,9 +16,9 @@ namespace SelectLTHashHashGT
 
         protected string EndTag { get => endTag; set => endTag = value; }
         protected string StartTag { get => startTag; set => startTag = value; }
-        protected string Title 
-        { 
-            get 
+        protected string Title
+        {
+            get
             {
                 return $"Selector of block {startTag} ... {endTag}";
             }

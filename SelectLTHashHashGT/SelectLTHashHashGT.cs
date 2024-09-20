@@ -1,14 +1,6 @@
-﻿using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.TextManager.Interop;
+﻿using Microsoft.VisualStudio.Shell;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using Task = System.Threading.Tasks.Task;
 
 namespace SelectLTHashHashGT
@@ -28,7 +20,7 @@ namespace SelectLTHashHashGT
         /// </summary>
         public static readonly Guid CommandSet = new Guid("765c9d5b-9b9b-4e24-8310-11270bb6041e");
 
-          /// <summary>
+        /// <summary>
         /// Initializes a new instance of the <see cref="SelectLTHashHashGT"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>

@@ -1,10 +1,6 @@
 ﻿using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
-using System.Globalization;
-using System.Threading;
-using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
 namespace SelectLTHashHashGT
@@ -30,7 +26,7 @@ namespace SelectLTHashHashGT
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private SelectComment(AsyncPackage package, OleMenuCommandService commandService) : base(package,"/*","*/")
+        private SelectComment(AsyncPackage package, OleMenuCommandService commandService) : base(package, "/*", "*/")
         {
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
