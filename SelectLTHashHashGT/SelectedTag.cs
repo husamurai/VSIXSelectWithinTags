@@ -1,14 +1,10 @@
-﻿using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.TextManager.Interop;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Globalization;
-using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
 namespace SelectLTHashHashGT
@@ -16,30 +12,39 @@ namespace SelectLTHashHashGT
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class SelectLTHashHashGT : Selector
+    internal sealed class SelectedTag : Selector
     {
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 4129; // 9001; instead of 0x0100 does not work;
+        public const int CommandId = 4131;
 
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
         public static readonly Guid CommandSet = new Guid("765c9d5b-9b9b-4e24-8310-11270bb6041e");
 
-          /// <summary>
-        /// Initializes a new instance of the <see cref="SelectLTHashHashGT"/> class.
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SelectedTag"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private SelectLTHashHashGT(AsyncPackage package, OleMenuCommandService commandService) : base(package, "<#", "#>")
+        private SelectedTag(AsyncPackage package, OleMenuCommandService commandService) : base(package)
         {
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
             var menuItem = new MenuCommand(this.Execute, menuCommandID);
             commandService.AddCommand(menuItem);
+        }
+
+        /// <summary>
+        /// Gets the instance of the command.
+        /// </summary>
+        public static SelectedTag Instance
+        {
+            get;
+            private set;
         }
 
         /// <summary>
@@ -52,14 +57,6 @@ namespace SelectLTHashHashGT
                 return Package;
             }
         }
-        /// <summary>
-        /// Gets the instance of the command.
-        /// </summary>
-        public static SelectLTHashHashGT Instance
-        {
-            get;
-            private set;
-        }
 
         /// <summary>
         /// Initializes the singleton instance of the command.
@@ -67,12 +64,12 @@ namespace SelectLTHashHashGT
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in SelectLTHashHashGT's constructor requires
+            // Switch to the main thread - the call to AddCommand in SelectedTag's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new SelectLTHashHashGT(package, commandService);
+            Instance = new SelectedTag(package, commandService);
         }
 
         /// <summary>

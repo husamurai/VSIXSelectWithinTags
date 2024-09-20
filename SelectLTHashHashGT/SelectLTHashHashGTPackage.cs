@@ -48,6 +48,8 @@ namespace SelectLTHashHashGT
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await SelectLTHashHashGT.InitializeAsync(this);
+            await SelectParanthesisedBlock.InitializeAsync(this);
+            await SelectedTag.InitializeAsync(this);
         }
 
         #endregion
