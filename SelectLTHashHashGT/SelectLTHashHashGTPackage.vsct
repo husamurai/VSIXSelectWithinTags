@@ -52,25 +52,39 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectLTHashHashGTId" priority="0x0100" type="Button">
+      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectLTHashHashGTI" priority="0x0100" type="Button">
         <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke SelectLTHashHashGT</ButtonText>
+          <ButtonText>Select &lt;# ... #&gt;</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="cmdidSelectParanthesisedBlock" priority="0x0100" type="Button">
+      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectPaPaI" priority="0x0100" type="Button">
         <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages1" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke SelectParanthesisedBlock</ButtonText>
+          <ButtonText>Select { ... }</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="cmdidSelectedTag" priority="0x0100" type="Button">
+      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectedTagI" priority="0x0100" type="Button">
         <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages2" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke SelectedTag</ButtonText>
+          <ButtonText>Select &lt;AnyWord ... /AnyWord&gt; </ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectRegionI" priority="0x0100" type="Button">
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages3" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Select #region ... #endregion</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectCommentI" priority="0x0100" type="Button">
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages4" id="bmpPic1" />
+        <Strings>
+          <ButtonText>Select /* ... */</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -82,9 +96,11 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="guidImages" href="Resources\SelectLTHashHashGT.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
-      <Bitmap guid="guidImages1" href="Resources\SelectParanthesisedBlock.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
-      <Bitmap guid="guidImages2" href="Resources\SelectedTag.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages" href="Resources\SelectLTHashHashGTB.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages1" href="Resources\SelectParanthesisedB.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages2" href="Resources\SelectedTagB.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages3" href="Resources\Region.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages4" href="Resources\SelectComment.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
     </Bitmaps>
   </Commands>
 
@@ -95,9 +111,11 @@
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidSelectLTHashHashGTPackageCmdSet" value="{765c9d5b-9b9b-4e24-8310-11270bb6041e}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol value="4129" name="SelectLTHashHashGTId" />
-      <IDSymbol value="4130" name="cmdidSelectParanthesisedBlock" />
-      <IDSymbol value="4131" name="cmdidSelectedTag" />
+      <IDSymbol value="4129" name="SelectLTHashHashGTI" />
+      <IDSymbol value="4130" name="SelectPaPaI" />
+      <IDSymbol value="4131" name="SelectedTagI" />
+      <IDSymbol value="256" name="SelectRegionI" />
+      <IDSymbol value="4132" name="SelectCommentI" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{74c6ae8d-34ef-4ba3-b945-807eeb1304a1}">
@@ -109,7 +127,7 @@
       <IDSymbol name="bmpPicStrikethrough" value="6" />
     </GuidSymbol>
   
-    <GuidSymbol name="guidImages1" value="{44c4c0da-3fe7-4e57-81cc-36a2ad33a322}" >
+    <GuidSymbol name="guidImages1" value="{44c4c0da-3fe7-4e57-81cc-36a2ad33a322}">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />
@@ -118,7 +136,7 @@
       <IDSymbol name="bmpPicStrikethrough" value="6" />
     </GuidSymbol>
   
-    <GuidSymbol  name="guidImages2" value="{0623b087-d507-49ad-8495-e0ac75464328}">
+    <GuidSymbol name="guidImages2" value="{0623b087-d507-49ad-8495-e0ac75464328}">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />
@@ -127,5 +145,23 @@
       <IDSymbol name="bmpPicStrikethrough" value="6" />
     </GuidSymbol>
   
+  
+    <GuidSymbol value="{b99a85e4-7c5b-49fc-8783-6f75ef48e28f}" name="guidImages3">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{7ccd2d81-7ceb-4f91-a915-4866fe30b675}" name="guidImages4">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
   </Symbols>
 </CommandTable>

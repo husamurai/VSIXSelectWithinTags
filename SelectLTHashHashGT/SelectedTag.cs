@@ -48,17 +48,6 @@ namespace SelectLTHashHashGT
         }
 
         /// <summary>
-        /// Gets the service provider from the owner package.
-        /// </summary>
-        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
-        {
-            get
-            {
-                return Package;
-            }
-        }
-
-        /// <summary>
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
@@ -67,7 +56,6 @@ namespace SelectLTHashHashGT
             // Switch to the main thread - the call to AddCommand in SelectedTag's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             Instance = new SelectedTag(package, commandService);
         }
@@ -84,5 +72,7 @@ namespace SelectLTHashHashGT
             ThreadHelper.ThrowIfNotOnUIThread();
             DoTheJob();
         }
+        #region
+        #endregion
     }
 }
