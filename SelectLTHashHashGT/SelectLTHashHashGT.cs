@@ -26,13 +26,15 @@ namespace SelectLTHashHashGT
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private SelectLTHashHashGT(AsyncPackage package, OleMenuCommandService commandService) : base(package, "<#", "#>")
+        private SelectLTHashHashGT(AsyncPackage package, OleMenuCommandService commandService) : base(package, StartHasher(), EndHasher())
         {
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
             var menuItem = new MenuCommand(this.Execute, menuCommandID);
             commandService.AddCommand(menuItem);
         }
+        public static string EndHasher() => "#>";
+        public static string StartHasher() => "<#";
 
         /// <summary>
         /// Gets the instance of the command.

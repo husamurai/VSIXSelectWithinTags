@@ -1,3 +1,4 @@
+/*.*//*-*/
 <#.#>
 #region 
 Inside Region
@@ -44,7 +45,7 @@ comment
 */
 /*
 comment
-/*
+*/
 
 <Button 
 inside button 

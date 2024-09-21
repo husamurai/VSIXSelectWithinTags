@@ -26,13 +26,16 @@ namespace SelectLTHashHashGT
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private SelectParanthesisedBlock(AsyncPackage package, OleMenuCommandService commandService) : base(package, "{", "}")
+        private SelectParanthesisedBlock(AsyncPackage package, OleMenuCommandService commandService) : base(package, StartParanthesis(), EndParanthesis())
         {
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
             var menuItem = new MenuCommand(this.Execute, menuCommandID);
             commandService.AddCommand(menuItem);
         }
+
+        public static string EndParanthesis() => "}";
+        public static string StartParanthesis() => "{";
 
         /// <summary>
         /// Gets the instance of the command.

@@ -87,11 +87,39 @@
           <ButtonText>Select /* ... */</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="cmdidReverseSelectLTHashHashGT" priority="0x0100" type="Button">
+      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectLTHashHashGTI" priority="0x0100" type="Button">
         <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages5" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke ReverseSelectLTHashHashGT</ButtonText>
+			<ButtonText>Reverse Select &lt;# ... #&gt;</ButtonText>
+		</Strings>
+      </Button>
+      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectCommentI" priority="0x0100" type="Button">
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages6" id="bmpPic1" />
+        <Strings>
+			<ButtonText>Reverse Select /* ... */</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseReverseSelectedTagI" priority="0x0100" type="Button">
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages7" id="bmpPic1" />
+        <Strings>
+			<ButtonText>Reverse Select &lt;AnyWord ... /AnyWord&gt; </ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectParanthesisedBlockI" priority="0x0100" type="Button">
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages8" id="bmpPic1" />
+        <Strings>
+			<ButtonText>Reverse Select { ... }</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectRegionI" priority="0x0100" type="Button">
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages9" id="bmpPic1" />
+        <Strings>
+			<ButtonText>Reverse Select #region ... #endregion</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -109,6 +137,10 @@
       <Bitmap guid="guidImages3" href="Resources\Region.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
       <Bitmap guid="guidImages4" href="Resources\SelectComment.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
       <Bitmap guid="guidImages5" href="Resources\ReverseSelectLTHashHashGT.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages6" href="Resources\ReverseSelectComment.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages7" href="Resources\ReverseSelectedTag.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages8" href="Resources\ReverseSelectParanthesisedBlock.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <Bitmap guid="guidImages9" href="Resources\ReverseSelectRegion.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
     </Bitmaps>
   </Commands>
 
@@ -124,7 +156,11 @@
       <IDSymbol value="4131" name="SelectedTagI" />
       <IDSymbol value="4132" name="SelectRegionI" />
       <IDSymbol value="4133" name="SelectCommentI" />
-      <IDSymbol value="4134" name="cmdidReverseSelectLTHashHashGT" />
+      <IDSymbol value="4134" name="ReverseSelectLTHashHashGTI" />
+      <IDSymbol value="4138" name="ReverseSelectCommentI" />
+      <IDSymbol value="4135" name="ReverseReverseSelectedTagI" />
+      <IDSymbol value="4136" name="ReverseSelectParanthesisedBlockI" />
+      <IDSymbol value="4137" name="ReverseSelectRegionI" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{74c6ae8d-34ef-4ba3-b945-807eeb1304a1}">
@@ -174,6 +210,42 @@
     </GuidSymbol>
   
     <GuidSymbol value="{acc6d613-04d7-488f-97af-955c5f2abac8}" name="guidImages5">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{c7375713-07cb-40ee-9399-edeb6a8add8e}" name="guidImages6">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{87a377ef-060d-4892-b0dc-7e1d914f975d}" name="guidImages7">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{0999a2c8-a153-4dc3-bfe6-20475fac2690}" name="guidImages8">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{a7bb521e-2ebb-43c0-b988-7ccfb95ae814}" name="guidImages9">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />

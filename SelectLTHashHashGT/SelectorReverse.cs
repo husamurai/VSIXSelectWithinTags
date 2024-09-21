@@ -42,18 +42,11 @@ namespace SelectLTHashHashGT
                 int previous_start = text.LastIndexOf(StartTag, current_start, StringComparison.OrdinalIgnoreCase);
                 if (previous_start == -1)
                     break; // No matching start tag found
-                if (previous_end > -1)
+                if (previous_end > -1 && (previous_start < previous_end))
                 {
-                    if (previous_start < previous_end)
-                    {
-                        tagStack.Push(previous_end);
-                        current_start = previous_end;
-                    }
-                    else
-                    {
-                        tagStack.Pop();
-                        current_start = previous_start;
-                    }
+                    tagStack.Push(previous_end);
+                    if (previous_end > 0)
+                        current_start = previous_end - 1;
                 }
                 else
                 {
@@ -64,7 +57,7 @@ namespace SelectLTHashHashGT
 
             if (tagStack.Count == 0)
             {
-                return new SnapshotSpan(snapshot, new Span(current_start, current_start + finishIndex + EndTag.Length));
+                return new SnapshotSpan(snapshot, new Span(current_start, (finishIndex + EndTag.Length) - current_start ));
             }
             ShowMsg("No matching end tag found!");
 

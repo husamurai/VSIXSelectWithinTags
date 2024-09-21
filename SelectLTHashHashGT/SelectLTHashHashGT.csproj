@@ -49,7 +49,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReverseSelectComment.cs" />
+    <Compile Include="ReverseSelectedTag.cs" />
     <Compile Include="ReverseSelectLTHashHashGT.cs" />
+    <Compile Include="ReverseSelectParanthesisedBlock.cs" />
+    <Compile Include="ReverseSelectRegion.cs" />
     <Compile Include="SelectComment.cs" />
     <Compile Include="SelectorReverse.cs" />
     <Compile Include="SelectRegion.cs" />
@@ -88,11 +92,16 @@
   <ItemGroup>
     <Content Include="Google Profile.ico" />
     <Content Include="Resources\Region.png" />
+    <Content Include="Resources\ReverseSelectComment.png" />
+    <Content Include="Resources\ReverseSelectedTag.png" />
     <Content Include="Resources\ReverseSelectLTHashHashGT.png" />
+    <Content Include="Resources\ReverseSelectParanthesisedBlock.png" />
+    <Content Include="Resources\ReverseSelectRegion.png" />
     <Content Include="Resources\SelectComment.png" />
     <Content Include="Resources\SelectedTagB.png" />
     <Content Include="Resources\SelectLTHashHashGTB.png" />
     <Content Include="Resources\SelectParanthesisedB.png" />
+    <Content Include="TestFile.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

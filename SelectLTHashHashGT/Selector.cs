@@ -70,18 +70,10 @@ namespace SelectLTHashHashGT
                 int next_end = text.IndexOf(EndTag, current_start, StringComparison.OrdinalIgnoreCase);
                 if (next_end == -1)
                     break; // No matching end tag found
-                if (next_start > -1)
+                if (next_start > -1 && (next_start < next_end))
                 {
-                    if (next_start < next_end)
-                    {
-                        tagStack.Push(next_start);
-                        current_start = next_start + StartTag.Length;
-                    }
-                    else
-                    {
-                        tagStack.Pop();
-                        current_start = next_end + EndTag.Length;
-                    }
+                    tagStack.Push(next_start);
+                    current_start = next_start + StartTag.Length;
                 }
                 else
                 {

@@ -30,7 +30,7 @@ namespace SelectLTHashHashGT
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private ReverseSelectLTHashHashGT(AsyncPackage package, OleMenuCommandService commandService) : base(package, "<#", "#>")
+        private ReverseSelectLTHashHashGT(AsyncPackage package, OleMenuCommandService commandService) : base(package, SelectLTHashHashGT.StartHasher(), SelectLTHashHashGT.EndHasher())
         {
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
