@@ -13,7 +13,7 @@ namespace SelectLTHashHashGT
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 4132;
+        public const int CommandId = 4133;
 
         /// <summary>
         /// Command menu group (command set GUID).

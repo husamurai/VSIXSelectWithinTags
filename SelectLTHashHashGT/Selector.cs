@@ -21,7 +21,7 @@ namespace SelectLTHashHashGT
             this.package = package ?? throw new ArgumentNullException(nameof(package));
         }
 
-        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
+        protected Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
         {
             get
             {
@@ -31,7 +31,7 @@ namespace SelectLTHashHashGT
 
         public AsyncPackage Package => package;
 
-        private IWpfTextView GetTextView()
+        protected IWpfTextView GetTextView()
         {
             IWpfTextView textView = null;
             var textManager = (IVsTextManager)ServiceProvider.GetServiceAsync(typeof(SVsTextManager)).Result;
@@ -46,10 +46,13 @@ namespace SelectLTHashHashGT
             }
             return textView;
         }
-        private SnapshotSpan? FindTagContent(ITextSnapshot snapshot, SnapshotPoint startPoint)
+        virtual protected SnapshotSpan? FindTagContent(ITextSnapshot snapshot, SnapshotPoint startPoint)
         {
             var text = snapshot.GetText();
-            int startIndex = text.IndexOf(StartTag, startPoint.Position, StringComparison.OrdinalIgnoreCase);
+            int startIndex = startPoint.Position - StartTag.Length;
+            if (startIndex < 0)
+                startIndex = 0;
+            startIndex = text.IndexOf(StartTag, startIndex, StringComparison.OrdinalIgnoreCase);
             if (startIndex == -1)
             {
                 ShowMsg("No Tag is present from position {startPoint.Position}!");
@@ -98,7 +101,7 @@ namespace SelectLTHashHashGT
 
         private static string alpabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        private string GetStartOfWord(IWpfTextView textView)
+        protected string GetStartOfWord(IWpfTextView textView)
         {
             string sw = string.Empty;
             var bp = textView.Caret.Position.BufferPosition;
@@ -123,7 +126,7 @@ namespace SelectLTHashHashGT
 
             return sw;
         }
-        private void SetSelectedTags(IWpfTextView textView)
+        protected void SetSelectedTags(IWpfTextView textView)
         {
             StartTag = string.Empty; EndTag = string.Empty;
             string sp = GetStartOfWord(textView);
@@ -159,7 +162,7 @@ namespace SelectLTHashHashGT
                 }
             }
         }
-        private int ShowMsg(string msg)
+        protected int ShowMsg(string msg)
         {
             int answer = VsShellUtilities.ShowMessageBox(
                 Package,

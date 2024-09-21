@@ -49,7 +49,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReverseSelectLTHashHashGT.cs" />
     <Compile Include="SelectComment.cs" />
+    <Compile Include="SelectorReverse.cs" />
     <Compile Include="SelectRegion.cs" />
     <Compile Include="SelectedTag.cs" />
     <Compile Include="SelectLTHashHashGT.cs" />
@@ -73,7 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.11.40262" ExcludeAssets="runtime">
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.11.435" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +88,7 @@
   <ItemGroup>
     <Content Include="Google Profile.ico" />
     <Content Include="Resources\Region.png" />
+    <Content Include="Resources\ReverseSelectLTHashHashGT.png" />
     <Content Include="Resources\SelectComment.png" />
     <Content Include="Resources\SelectedTagB.png" />
     <Content Include="Resources\SelectLTHashHashGTB.png" />

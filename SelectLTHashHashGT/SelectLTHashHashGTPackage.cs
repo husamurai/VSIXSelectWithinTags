@@ -52,6 +52,7 @@ namespace SelectLTHashHashGT
             await SelectedTag.InitializeAsync(this);
             await SelectRegion.InitializeAsync(this);
             await SelectComment.InitializeAsync(this);
+            await ReverseSelectLTHashHashGT.InitializeAsync(this);
         }
 
         #endregion

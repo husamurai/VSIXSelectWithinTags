@@ -1,6 +1,10 @@
 ﻿using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
+using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
 namespace SelectLTHashHashGT
@@ -8,26 +12,25 @@ namespace SelectLTHashHashGT
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class SelectRegion : Selector
+    internal sealed class ReverseSelectLTHashHashGT : SelectorReverse
     {
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 4132;
+        public const int CommandId = 4134;
 
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
         public static readonly Guid CommandSet = new Guid("765c9d5b-9b9b-4e24-8310-11270bb6041e");
 
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="SelectRegion"/> class.
+        /// Initializes a new instance of the <see cref="ReverseSelectLTHashHashGT"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private SelectRegion(AsyncPackage package, OleMenuCommandService commandService) : base(package, "#region", "#endregion")
+        private ReverseSelectLTHashHashGT(AsyncPackage package, OleMenuCommandService commandService) : base(package, "<#", "#>")
         {
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
@@ -38,11 +41,12 @@ namespace SelectLTHashHashGT
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static SelectRegion Instance
+        public static ReverseSelectLTHashHashGT Instance
         {
             get;
             private set;
         }
+
 
         /// <summary>
         /// Initializes the singleton instance of the command.
@@ -50,11 +54,11 @@ namespace SelectLTHashHashGT
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in SelectRegion's constructor requires
+            // Switch to the main thread - the call to AddCommand in ReverseSelectLTHashHashGT's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new SelectRegion(package, commandService);
+            Instance = new ReverseSelectLTHashHashGT(package, commandService);
         }
 
         /// <summary>
