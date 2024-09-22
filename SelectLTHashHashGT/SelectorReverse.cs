@@ -45,13 +45,12 @@ namespace SelectLTHashHashGT
                 if (previous_end > -1 && (previous_start < previous_end))
                 {
                     tagStack.Push(previous_end);
-                    if (previous_end > 0)
-                        current_start = previous_end - 1;
+                    Progress(previous_end);
                 }
                 else
                 {
                     tagStack.Pop();
-                    current_start = previous_start;
+                    Progress(previous_start);
                 }
             }
 
@@ -62,6 +61,13 @@ namespace SelectLTHashHashGT
             ShowMsg("No matching end tag found!");
 
             return null; // No matching end tag found
+            void Progress(int s)
+            {
+                if (s > 0)
+                    current_start = (tagStack.Count >  0) ?  --s : s ;
+                else
+                    current_start = 0;
+            }
         }
     }
 }

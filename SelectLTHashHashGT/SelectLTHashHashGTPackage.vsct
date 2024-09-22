@@ -36,7 +36,7 @@
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
     <Groups>
-      <Group guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+      <Group guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
       </Group>
     </Groups>
@@ -53,70 +53,70 @@
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectLTHashHashGTI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <ButtonText>Select &lt;# ... #&gt;</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectPaPaI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
         <Icon guid="guidImages1" id="bmpPic1" />
         <Strings>
           <ButtonText>Select { ... }</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectedTagI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
         <Icon guid="guidImages2" id="bmpPic1" />
         <Strings>
           <ButtonText>Select &lt;AnyWord ... /AnyWord&gt; </ButtonText>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectRegionI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
         <Icon guid="guidImages3" id="bmpPic1" />
         <Strings>
           <ButtonText>Select #region ... #endregion</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectCommentI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
         <Icon guid="guidImages4" id="bmpPic1" />
         <Strings>
           <ButtonText>Select /* ... */</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectLTHashHashGTI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
         <Icon guid="guidImages5" id="bmpPic1" />
         <Strings>
 			<ButtonText>Reverse Select &lt;# ... #&gt;</ButtonText>
 		</Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectCommentI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
         <Icon guid="guidImages6" id="bmpPic1" />
         <Strings>
 			<ButtonText>Reverse Select /* ... */</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseReverseSelectedTagI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
         <Icon guid="guidImages7" id="bmpPic1" />
         <Strings>
 			<ButtonText>Reverse Select &lt;AnyWord ... /AnyWord&gt; </ButtonText>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectParanthesisedBlockI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
         <Icon guid="guidImages8" id="bmpPic1" />
         <Strings>
 			<ButtonText>Reverse Select { ... }</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectRegionI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MyMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
         <Icon guid="guidImages9" id="bmpPic1" />
         <Strings>
 			<ButtonText>Reverse Select #region ... #endregion</ButtonText>
@@ -150,7 +150,7 @@
 
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidSelectLTHashHashGTPackageCmdSet" value="{765c9d5b-9b9b-4e24-8310-11270bb6041e}">
-      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="MySelectDownAndUpMenuGroup" value="0x1020" />
       <IDSymbol value="4129" name="SelectLTHashHashGTI" />
       <IDSymbol value="4130" name="SelectPaPaI" />
       <IDSymbol value="4131" name="SelectedTagI" />

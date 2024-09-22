@@ -73,12 +73,12 @@ namespace SelectLTHashHashGT
                 if (next_start > -1 && (next_start < next_end))
                 {
                     tagStack.Push(next_start);
-                    current_start = next_start + StartTag.Length;
+                    Progress(next_start + StartTag.Length);
                 }
                 else
                 {
                     tagStack.Pop();
-                    current_start = next_end + EndTag.Length;
+                    Progress(next_end + EndTag.Length);
                 }
             }
 
@@ -89,6 +89,14 @@ namespace SelectLTHashHashGT
             ShowMsg("No matching end tag found!");
 
             return null; // No matching end tag found
+
+            void Progress(int s)
+            {
+                if (s < text.Length)
+                    current_start = s;
+                else
+                    current_start = text.Length;
+            }
         }
 
         private static string alpabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
