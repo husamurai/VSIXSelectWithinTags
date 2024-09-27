@@ -1,6 +1,8 @@
-﻿using Microsoft.VisualStudio;
+﻿using EnvDTE;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Text.Editor;
 using System;
 using System.ComponentModel.Design;
 using System.Globalization;
@@ -33,8 +35,12 @@ namespace SelectLTHashHashGT
         /// <param name="commandService">Command service to add command to, not null.</param>
         private SelectOption(AsyncPackage package, OleMenuCommandService commandService) : base(package)
         {
-            GetSelectAll(commandService);
-            AddCommand(commandService, CommandSet, CommandId);
+            var command = AddCommand(commandService, CommandSet, CommandId);
+            if (command != null)
+            {
+                IWpfTextView textView = GetTextView();
+                command.Enabled = textView != null;
+            }
         }
 
         /// <summary>
@@ -57,6 +63,8 @@ namespace SelectLTHashHashGT
             Instance = new SelectOption(package, commandService);
         }
 
-        public override void DoTheJob() { } // do nothing
+        public override void DoTheJob() 
+        { 
+        } // do nothing
     }
 }

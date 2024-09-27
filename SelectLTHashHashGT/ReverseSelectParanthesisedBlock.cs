@@ -25,11 +25,6 @@ namespace SelectLTHashHashGT
         public static readonly Guid CommandSet = new Guid("765c9d5b-9b9b-4e24-8310-11270bb6041e");
 
         /// <summary>
-        /// VS Package that provides this command, not null.
-        /// </summary>
-        private readonly AsyncPackage package;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ReverseSelectParanthesisedBlock"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>

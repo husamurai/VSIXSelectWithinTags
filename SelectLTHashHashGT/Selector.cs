@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SelectLTHashHashGT
 {
@@ -25,13 +27,6 @@ namespace SelectLTHashHashGT
             this.package = package ?? throw new ArgumentNullException(nameof(package));
         }
         protected MenuCommand selectAllCommand = null;
-        protected void GetSelectAll(OleMenuCommandService commandService)
-        {
-            // Get the status of the "Select All" command
-            var selectAllCommandID = new CommandID(VSConstants.GUID_VSStandardCommandSet97, (int)VSConstants.VSStd97CmdID.SelectAll);
-            if (selectAllCommandID != null)
-                selectAllCommand = commandService.FindCommand(selectAllCommandID);
-        }
         protected static async Task<OleMenuCommandService> GetCommandServiceAsync(AsyncPackage package)
         {
             // Switch to the main thread - the call to AddCommand in SelectOption's constructor requires
@@ -39,20 +34,6 @@ namespace SelectLTHashHashGT
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             return commandService;
-        }
-        private void SelectOptionBeforeQueryStatus(object sender, EventArgs e)
-        {
-            var command = sender as OleMenuCommand;
-            if (command != null)
-            {
-                if (selectAllCommand == null)
-                {
-                    OleMenuCommandService commandService = GetCommandServiceAsync((AsyncPackage)ServiceProvider).Result;
-                    GetSelectAll(commandService);
-                }
-                // Enable or disable the "Select Option" command based on the "Select All" command's status
-                command.Enabled = selectAllCommand != null && selectAllCommand.Enabled;
-            }
         }
 
         public AsyncPackage Package => package;
@@ -63,16 +44,26 @@ namespace SelectLTHashHashGT
                 return this.Package;
             }
         }
-        private CommandID menuCommandID = null;
-        public MenuCommand MenuItem { get => menuItem; set => menuItem = value; }
-        public CommandID MenuCommandID { get => menuCommandID; set => menuCommandID = value; }
-
-        protected void AddCommand(OleMenuCommandService commandService, Guid CommandSet, int CommandId)
+        /// <summary>
+        /// If you need to dynamically enable or disable a command based on certain conditions, you should use OleMenuCommand. For simpler scenarios where the command’s status does not change, MenuCommand might be sufficient.
+        //Here’s a quick comparison:
+        //MenuCommand: Basic command handling, no dynamic status.
+        //OleMenuCommand: Advanced command handling, supports dynamic status via BeforeQueryStatus.
+        //Would you like an example of how to use OleMenuCommand in your extension?
+        /// </summary>
+        /// <param name="commandService"></param>
+        /// <param name="CommandSet"></param>
+        /// <param name="CommandId"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        protected OleMenuCommand AddCommand(OleMenuCommandService commandService, Guid CommandSet, int CommandId)
         {
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
-            MenuCommandID = new CommandID(CommandSet, CommandId);
-            MenuItem = new MenuCommand(this.Execute, MenuCommandID);
-            commandService.AddCommand(MenuItem);
+            var menuCommandID = new CommandID(CommandSet, CommandId);
+            var menuCommand = new OleMenuCommand(this.Execute, menuCommandID);
+            menuCommand.BeforeQueryStatus += DoBeforeQueryStatus;
+            menuCommand.Enabled = false;
+            commandService.AddCommand(menuCommand);
+            return menuCommand;
         }
         /// <summary>
         /// This function is the callback used to execute the command when the menu item is clicked.
@@ -87,12 +78,10 @@ namespace SelectLTHashHashGT
             DoTheJob();
         }
 
-        private MenuCommand menuItem = null;
         protected IWpfTextView GetTextView()
         {
             IWpfTextView textView = null;
-            IVsTextManager vIVsTextManager = ServiceProvider.GetServiceAsync(typeof(SVsTextManager)).Result as IVsTextManager;
-            if (vIVsTextManager != null)
+            if (ServiceProvider.GetServiceAsync(typeof(SVsTextManager)).Result is IVsTextManager vIVsTextManager)
             {
                 vIVsTextManager.GetActiveView(1, null, out IVsTextView vTextView);
                 var userData = vTextView as IVsUserData;
@@ -202,6 +191,7 @@ namespace SelectLTHashHashGT
             }
         }
 
+        
         public virtual void DoTheJob()
         {
             IWpfTextView textView = GetTextView();
@@ -232,6 +222,15 @@ namespace SelectLTHashHashGT
                 OLEMSGBUTTON.OLEMSGBUTTON_OK,
                 OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
             return answer;
+        }
+        private void DoBeforeQueryStatus(object sender, EventArgs e)
+        {
+            var command = sender as OleMenuCommand;
+            if (command != null)
+            {
+                IWpfTextView textView = GetTextView();
+                command.Enabled = textView != null;
+            }
         }
     }
 }
