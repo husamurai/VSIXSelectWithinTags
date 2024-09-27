@@ -55,6 +55,7 @@
     <Compile Include="ReverseSelectParanthesisedBlock.cs" />
     <Compile Include="ReverseSelectRegion.cs" />
     <Compile Include="SelectComment.cs" />
+    <Compile Include="SelectOption.cs" />
     <Compile Include="SelectorReverse.cs" />
     <Compile Include="SelectRegion.cs" />
     <Compile Include="SelectedTag.cs" />
@@ -100,6 +101,7 @@
     <Content Include="Resources\SelectComment.png" />
     <Content Include="Resources\SelectedTagB.png" />
     <Content Include="Resources\SelectLTHashHashGTB.png" />
+    <Content Include="Resources\SelectOption.png" />
     <Content Include="Resources\SelectParanthesisedB.png" />
     <Content Include="TestFile.txt" />
   </ItemGroup>

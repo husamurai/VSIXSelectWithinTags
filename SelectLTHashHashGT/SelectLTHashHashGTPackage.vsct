@@ -29,15 +29,24 @@
     is a unique pair of guid and numeric identifier; the guid part of the identifier is usually
     called "command set" and is used to group different command inside a logically related
     group; your package should define its own command set in order to avoid collisions
-    with command ids defined by other packages. -->
+    with command ids defined by other packages. IDM_VS_MENU_EDIT, IDG_VS_EDIT_SELECT, IDM_VS_MENU_TOOLS-->
 
-    <!-- In this section you can define new menu groups. A menu group is a container for
+		  <Menus>
+			  <Menu guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionI" priority="0x0100" type="Menu">
+				  <Parent guid="guidSHLMainMenu" id="IDG_VS_EDIT_SELECT"/>
+				  <Strings>
+					  <ButtonText>Select Option</ButtonText>
+				  </Strings>
+			  </Menu>
+		  </Menus>
+
+		  <!-- In this section you can define new menu groups. A menu group is a container for
          other menus or buttons (commands); from a visual point of view you can see the
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
     <Groups>
-      <Group guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      <Group guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" priority="0x0600">
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionI" />
       </Group>
     </Groups>
 
@@ -52,74 +61,95 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectLTHashHashGTI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
+
+	<!--<Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionI" priority="0x0100" type="Button">
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="IDG_VS_EDIT_SELECT" />
+        <Icon guid="guidImages10" id="bmpPic1" />
+        <Strings>
+            <ButtonText>Select Option</ButtonText>
+            <CommandName>SelectOptionI</CommandName>
+        </Strings>
+      </Button>-->
+
+	
+	<Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectLTHashHashGTI" priority="0x0100" type="Button">
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <ButtonText>Select &lt;# ... #&gt;</ButtonText>
+            <CommandName>SelectLTHashHashGTI</CommandName>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectPaPaI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages1" id="bmpPic1" />
         <Strings>
           <ButtonText>Select { ... }</ButtonText>
+            <CommandName>SelectPaPaI</CommandName>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectedTagI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages2" id="bmpPic1" />
         <Strings>
           <ButtonText>Select &lt;AnyWord ... /AnyWord&gt; </ButtonText>
+            <CommandName>SelectedTagI</CommandName>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectRegionI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages3" id="bmpPic1" />
         <Strings>
           <ButtonText>Select #region ... #endregion</ButtonText>
+            <CommandName>SelectRegionI</CommandName>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectCommentI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages4" id="bmpPic1" />
         <Strings>
           <ButtonText>Select /* ... */</ButtonText>
+            <CommandName>SelectCommentI</CommandName>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectLTHashHashGTI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages5" id="bmpPic1" />
         <Strings>
 			<ButtonText>Reverse Select &lt;# ... #&gt;</ButtonText>
+            <CommandName>ReverseSelectLTHashHashGTI</CommandName>
 		</Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectCommentI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages6" id="bmpPic1" />
         <Strings>
 			<ButtonText>Reverse Select /* ... */</ButtonText>
+            <CommandName>ReverseSelectCommentI</CommandName>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseReverseSelectedTagI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages7" id="bmpPic1" />
         <Strings>
 			<ButtonText>Reverse Select &lt;AnyWord ... /AnyWord&gt; </ButtonText>
+            <CommandName>ReverseReverseSelectedTagI</CommandName>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectParanthesisedBlockI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages8" id="bmpPic1" />
         <Strings>
 			<ButtonText>Reverse Select { ... }</ButtonText>
+            <CommandName>ReverseSelectParanthesisedBlockI</CommandName>
         </Strings>
       </Button>
       <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectRegionI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="MySelectDownAndUpMenuGroup" />
+        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages9" id="bmpPic1" />
         <Strings>
 			<ButtonText>Reverse Select #region ... #endregion</ButtonText>
+            <CommandName>ReverseSelectRegionI</CommandName>
         </Strings>
       </Button>
     </Buttons>
@@ -141,6 +171,7 @@
       <Bitmap guid="guidImages7" href="Resources\ReverseSelectedTag.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
       <Bitmap guid="guidImages8" href="Resources\ReverseSelectParanthesisedBlock.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
       <Bitmap guid="guidImages9" href="Resources\ReverseSelectRegion.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+      <!--<Bitmap guid="guidImages10" href="Resources\SelectOption.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />-->
     </Bitmaps>
   </Commands>
 
@@ -150,7 +181,8 @@
 
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidSelectLTHashHashGTPackageCmdSet" value="{765c9d5b-9b9b-4e24-8310-11270bb6041e}">
-      <IDSymbol name="MySelectDownAndUpMenuGroup" value="0x1020" />
+		<IDSymbol value="0x1020" name="SelectOptionGroup" />
+		<IDSymbol value="4127" name="SelectOptionI" />
       <IDSymbol value="4129" name="SelectLTHashHashGTI" />
       <IDSymbol value="4130" name="SelectPaPaI" />
       <IDSymbol value="4131" name="SelectedTagI" />
@@ -191,7 +223,7 @@
     </GuidSymbol>
   
   
-    <GuidSymbol value="{b99a85e4-7c5b-49fc-8783-6f75ef48e28f}" name="guidImages3">
+    <GuidSymbol name="guidImages3" value="{b99a85e4-7c5b-49fc-8783-6f75ef48e28f}" >
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />
@@ -200,7 +232,7 @@
       <IDSymbol name="bmpPicStrikethrough" value="6" />
     </GuidSymbol>
   
-    <GuidSymbol value="{7ccd2d81-7ceb-4f91-a915-4866fe30b675}" name="guidImages4">
+    <GuidSymbol  name="guidImages4" value="{7ccd2d81-7ceb-4f91-a915-4866fe30b675}">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />
@@ -246,6 +278,15 @@
     </GuidSymbol>
   
     <GuidSymbol value="{a7bb521e-2ebb-43c0-b988-7ccfb95ae814}" name="guidImages9">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+    <GuidSymbol value="{db6b33ba-af05-48af-ade6-c6c5eb0b2b3f}" name="guidImages10">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />

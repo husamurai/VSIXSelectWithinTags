@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.Editor;
+﻿using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.Editor;
+using Microsoft.VisualStudio.RpcContracts.Commands;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
@@ -6,6 +8,8 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Threading.Tasks;
 
 namespace SelectLTHashHashGT
 {
@@ -20,29 +24,85 @@ namespace SelectLTHashHashGT
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
         }
+        protected MenuCommand selectAllCommand = null;
+        protected void GetSelectAll(OleMenuCommandService commandService)
+        {
+            // Get the status of the "Select All" command
+            var selectAllCommandID = new CommandID(VSConstants.GUID_VSStandardCommandSet97, (int)VSConstants.VSStd97CmdID.SelectAll);
+            if (selectAllCommandID != null)
+                selectAllCommand = commandService.FindCommand(selectAllCommandID);
+        }
+        protected static async Task<OleMenuCommandService> GetCommandServiceAsync(AsyncPackage package)
+        {
+            // Switch to the main thread - the call to AddCommand in SelectOption's constructor requires
+            // the UI thread.
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
+            OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            return commandService;
+        }
+        private void SelectOptionBeforeQueryStatus(object sender, EventArgs e)
+        {
+            var command = sender as OleMenuCommand;
+            if (command != null)
+            {
+                if (selectAllCommand == null)
+                {
+                    OleMenuCommandService commandService = GetCommandServiceAsync((AsyncPackage)ServiceProvider).Result;
+                    GetSelectAll(commandService);
+                }
+                // Enable or disable the "Select Option" command based on the "Select All" command's status
+                command.Enabled = selectAllCommand != null && selectAllCommand.Enabled;
+            }
+        }
 
-        protected Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
+        public AsyncPackage Package => package;
+        protected IAsyncServiceProvider ServiceProvider
         {
             get
             {
                 return this.Package;
             }
         }
+        private CommandID menuCommandID = null;
+        public MenuCommand MenuItem { get => menuItem; set => menuItem = value; }
+        public CommandID MenuCommandID { get => menuCommandID; set => menuCommandID = value; }
 
-        public AsyncPackage Package => package;
+        protected void AddCommand(OleMenuCommandService commandService, Guid CommandSet, int CommandId)
+        {
+            commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
+            MenuCommandID = new CommandID(CommandSet, CommandId);
+            MenuItem = new MenuCommand(this.Execute, MenuCommandID);
+            commandService.AddCommand(MenuItem);
+        }
+        /// <summary>
+        /// This function is the callback used to execute the command when the menu item is clicked.
+        /// See the constructor to see how the menu item is associated with this function using
+        /// OleMenuCommandService service and MenuCommand class.
+        /// </summary>
+        /// <param name="sender">Event sender.</param>
+        /// <param name="e">Event args.</param>
+        private void Execute(object sender, EventArgs e)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            DoTheJob();
+        }
 
+        private MenuCommand menuItem = null;
         protected IWpfTextView GetTextView()
         {
             IWpfTextView textView = null;
-            var textManager = (IVsTextManager)ServiceProvider.GetServiceAsync(typeof(SVsTextManager)).Result;
-            textManager.GetActiveView(1, null, out IVsTextView vTextView);
-            var userData = vTextView as IVsUserData;
-            if (userData != null)
+            IVsTextManager vIVsTextManager = ServiceProvider.GetServiceAsync(typeof(SVsTextManager)).Result as IVsTextManager;
+            if (vIVsTextManager != null)
             {
-                var guidViewHost = DefGuidList.guidIWpfTextViewHost;
-                userData.GetData(ref guidViewHost, out var holder);
-                var viewHost = (IWpfTextViewHost)holder;
-                textView = viewHost.TextView;
+                vIVsTextManager.GetActiveView(1, null, out IVsTextView vTextView);
+                var userData = vTextView as IVsUserData;
+                if (userData != null)
+                {
+                    var guidViewHost = DefGuidList.guidIWpfTextViewHost;
+                    userData.GetData(ref guidViewHost, out var holder);
+                    var viewHost = (IWpfTextViewHost)holder;
+                    textView = viewHost.TextView;
+                }
             }
             return textView;
         }
@@ -142,7 +202,7 @@ namespace SelectLTHashHashGT
             }
         }
 
-        public void DoTheJob()
+        public virtual void DoTheJob()
         {
             IWpfTextView textView = GetTextView();
             if (textView != null)

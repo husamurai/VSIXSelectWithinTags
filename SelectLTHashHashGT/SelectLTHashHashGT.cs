@@ -28,10 +28,7 @@ namespace SelectLTHashHashGT
         /// <param name="commandService">Command service to add command to, not null.</param>
         private SelectLTHashHashGT(AsyncPackage package, OleMenuCommandService commandService) : base(package, StartHasher(), EndHasher())
         {
-            commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
-            var menuCommandID = new CommandID(CommandSet, CommandId);
-            var menuItem = new MenuCommand(this.Execute, menuCommandID);
-            commandService.AddCommand(menuItem);
+            AddCommand(commandService, CommandSet, CommandId);
         }
         public static string EndHasher() => "#>";
         public static string StartHasher() => "<#";
@@ -51,10 +48,7 @@ namespace SelectLTHashHashGT
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in SelectLTHashHashGT's constructor requires
-            // the UI thread.
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-            OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            OleMenuCommandService commandService = await GetCommandServiceAsync(package) as OleMenuCommandService;
             Instance = new SelectLTHashHashGT(package, commandService);
         }
 
