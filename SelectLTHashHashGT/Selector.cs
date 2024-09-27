@@ -26,13 +26,14 @@ namespace SelectLTHashHashGT
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
         }
-        protected MenuCommand selectAllCommand = null;
         protected static async Task<OleMenuCommandService> GetCommandServiceAsync(AsyncPackage package)
         {
             // Switch to the main thread - the call to AddCommand in SelectOption's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (VIVsTextManager == null)
+                VIVsTextManager = await package.GetServiceAsync(typeof(SVsTextManager)) as IVsTextManager;
             return commandService;
         }
 
@@ -44,6 +45,7 @@ namespace SelectLTHashHashGT
                 return this.Package;
             }
         }
+
         /// <summary>
         /// If you need to dynamically enable or disable a command based on certain conditions, you should use OleMenuCommand. For simpler scenarios where the command’s status does not change, MenuCommand might be sufficient.
         //Here’s a quick comparison:
@@ -55,7 +57,7 @@ namespace SelectLTHashHashGT
         /// <param name="CommandSet"></param>
         /// <param name="CommandId"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        protected OleMenuCommand AddCommand(OleMenuCommandService commandService, Guid CommandSet, int CommandId)
+        protected void AddCommand(OleMenuCommandService commandService, Guid CommandSet, int CommandId)
         {
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
@@ -63,7 +65,6 @@ namespace SelectLTHashHashGT
             menuCommand.BeforeQueryStatus += DoBeforeQueryStatus;
             menuCommand.Enabled = false;
             commandService.AddCommand(menuCommand);
-            return menuCommand;
         }
         /// <summary>
         /// This function is the callback used to execute the command when the menu item is clicked.
@@ -77,11 +78,12 @@ namespace SelectLTHashHashGT
             ThreadHelper.ThrowIfNotOnUIThread();
             DoTheJob();
         }
-
+        private static IVsTextManager vIVsTextManager = null;
+        protected static IVsTextManager VIVsTextManager { get => vIVsTextManager; set => vIVsTextManager = value; }
         protected IWpfTextView GetTextView()
         {
             IWpfTextView textView = null;
-            if (ServiceProvider.GetServiceAsync(typeof(SVsTextManager)).Result is IVsTextManager vIVsTextManager)
+            if (VIVsTextManager != null)// && sm is IVsTextManager vIVsTextManager)
             {
                 vIVsTextManager.GetActiveView(1, null, out IVsTextView vTextView);
                 var userData = vTextView as IVsUserData;

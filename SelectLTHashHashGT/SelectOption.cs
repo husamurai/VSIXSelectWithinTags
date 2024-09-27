@@ -3,6 +3,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.VisualStudio.TextManager.Interop;
 using System;
 using System.ComponentModel.Design;
 using System.Globalization;
@@ -35,12 +36,7 @@ namespace SelectLTHashHashGT
         /// <param name="commandService">Command service to add command to, not null.</param>
         private SelectOption(AsyncPackage package, OleMenuCommandService commandService) : base(package)
         {
-            var command = AddCommand(commandService, CommandSet, CommandId);
-            if (command != null)
-            {
-                IWpfTextView textView = GetTextView();
-                command.Enabled = textView != null;
-            }
+            AddCommand(commandService, CommandSet, CommandId);
         }
 
         /// <summary>
