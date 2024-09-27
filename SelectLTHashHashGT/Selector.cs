@@ -26,6 +26,8 @@ namespace SelectLTHashHashGT
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
         }
+        private static IVsTextManager vIVsTextManager = null;
+        protected static IVsTextManager VIVsTextManager { get => vIVsTextManager; set => vIVsTextManager = value; }
         protected static async Task<OleMenuCommandService> GetCommandServiceAsync(AsyncPackage package)
         {
             // Switch to the main thread - the call to AddCommand in SelectOption's constructor requires
@@ -78,8 +80,7 @@ namespace SelectLTHashHashGT
             ThreadHelper.ThrowIfNotOnUIThread();
             DoTheJob();
         }
-        private static IVsTextManager vIVsTextManager = null;
-        protected static IVsTextManager VIVsTextManager { get => vIVsTextManager; set => vIVsTextManager = value; }
+
         protected IWpfTextView GetTextView()
         {
             IWpfTextView textView = null;
@@ -230,6 +231,7 @@ namespace SelectLTHashHashGT
             var command = sender as OleMenuCommand;
             if (command != null)
             {
+                // works fine
                 IWpfTextView textView = GetTextView();
                 command.Enabled = textView != null;
             }
