@@ -26,6 +26,9 @@ namespace SelectLTHashHashGT
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
         }
+        private static MenuCommand selectOleMenuCommand = null;
+        public static MenuCommand SelectOleMenuCommand { get => selectOleMenuCommand; set => selectOleMenuCommand = value; }
+
         private static IVsTextManager vIVsTextManager = null;
         protected static IVsTextManager VIVsTextManager { get => vIVsTextManager; set => vIVsTextManager = value; }
         protected static async Task<OleMenuCommandService> GetCommandServiceAsync(AsyncPackage package)
@@ -36,6 +39,25 @@ namespace SelectLTHashHashGT
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (VIVsTextManager == null)
                 VIVsTextManager = await package.GetServiceAsync(typeof(SVsTextManager)) as IVsTextManager;
+            if (commandService != null && SelectOleMenuCommand == null)
+            {
+                //Guid selectGroupGuid = new Guid("{5EFC7975-14BC-11CF-9B2B-00AA00573819}"); // IDG_VS_EDIT_SELECT
+                //for (int i = 0; i < int.MaxValue; i++)
+                {
+                    // in C:\Program Files\Microsoft Visual Studio\2022\Community\VSSDK\VisualStudioIntegration\Common\Inc\vsshlids.h #define IDG_VS_EDIT_SELECT            0x012B in 
+                    // in C:\Program Files\Microsoft Visual Studio\2022\Community\VSSDK\VisualStudioIntegration\Common\Inc\stdidcmd.h #define cmdidSelectAll          31
+                    //CommandID menuCommandID = new CommandID(VsMenus.guidSHLMainMenu, 0x012B);// 
+                    //CommandID menuCommandID = new CommandID(VsMenus.guidStandardCommandSet2K, 31);// 
+                    //CommandID menuCommandID = new CommandID(VSConstants.GUID_VSStandardCommandSet97, (int)VSConstants.VSStd97CmdID.SelectAll);
+                    CommandID menuCommandID = new CommandID(VsMenus.guidStandardCommandSet97, 15);
+                    if (menuCommandID != null)
+                    {
+                        SelectOleMenuCommand = commandService.FindCommand(menuCommandID);
+                        //if (SelectOleMenuCommand != null)
+                        //    break;
+                    }
+                }
+            }
             return commandService;
         }
 
@@ -47,6 +69,7 @@ namespace SelectLTHashHashGT
                 return this.Package;
             }
         }
+
 
         /// <summary>
         /// If you need to dynamically enable or disable a command based on certain conditions, you should use OleMenuCommand. For simpler scenarios where the command’s status does not change, MenuCommand might be sufficient.
@@ -231,9 +254,16 @@ namespace SelectLTHashHashGT
             var command = sender as OleMenuCommand;
             if (command != null)
             {
-                // works fine
-                IWpfTextView textView = GetTextView();
-                command.Enabled = textView != null;
+                if (SelectOleMenuCommand == null)
+                {
+                    // works fine
+                    IWpfTextView textView = GetTextView();
+                    command.Enabled = textView != null;
+                }
+                else
+                {
+                    command.Enabled = SelectOleMenuCommand.Enabled;
+                }
             }
         }
     }

@@ -36,6 +36,7 @@
 				  <Parent guid="guidSHLMainMenu" id="IDG_VS_EDIT_SELECT"/>
 				  <Strings>
 					  <ButtonText>Select Option</ButtonText>
+					  <CommandName>SelectOptionI</CommandName>
 				  </Strings>
 			  </Menu>
 		  </Menus>
