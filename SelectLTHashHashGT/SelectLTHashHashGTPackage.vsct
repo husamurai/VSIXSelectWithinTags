@@ -29,14 +29,14 @@
     is a unique pair of guid and numeric identifier; the guid part of the identifier is usually
     called "command set" and is used to group different command inside a logically related
     group; your package should define its own command set in order to avoid collisions
-    with command ids defined by other packages. IDM_VS_MENU_EDIT, IDG_VS_EDIT_SELECT, IDM_VS_MENU_TOOLS-->
+    with command ids defined by other packages. guidSHLMainMenu, cmdidSelectAll, IDM_VS_MENU_EDIT, IDG_VS_EDIT_SELECT, IDM_VS_MENU_TOOLS-->
 
 		  <Menus>
-			  <Menu guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionI" priority="0x0100" type="Menu">
-				  <Parent guid="guidSHLMainMenu" id="IDG_VS_EDIT_SELECT"/>
+			  <Menu guid="guidSelectBlocksPackageCmdSet" id="cmdidSelectOption" priority="0x0100" type="Menu">
+				  <Parent guid="guidSHLMainMenu" id="IDG_VS_EDIT_SELECT" />
 				  <Strings>
 					  <ButtonText>Select Option</ButtonText>
-					  <CommandName>SelectOptionI</CommandName>
+					  <CommandName>cmdidSelectOption</CommandName>
 				  </Strings>
 			  </Menu>
 		  </Menus>
@@ -46,8 +46,8 @@
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
     <Groups>
-      <Group guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" priority="0x0600">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionI" />
+      <Group guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" priority="0x0100">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="cmdidSelectOption" />
       </Group>
     </Groups>
 
@@ -63,94 +63,122 @@
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
 
-	<!--<Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="IDG_VS_EDIT_SELECT" />
+	<Button guid="guidSelectBlocksPackageCmdSet" id="cmdidSelectOption" priority="0x0100" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="IDG_VS_EDIT_SELECT" />
         <Icon guid="guidImages10" id="bmpPic1" />
         <Strings>
             <ButtonText>Select Option</ButtonText>
-            <CommandName>SelectOptionI</CommandName>
+            <CommandName>cmdidSelectOption</CommandName>
         </Strings>
-      </Button>-->
+      </Button>
 
-	
-	<Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectLTHashHashGTI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
+		<Button guid="guidSelectBlocksPackageCmdSet" id="cmdidBlockSelection" priority="0x0100" type="Button">
+			<Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
+			<Icon guid="guidImages11" id="bmpPic1" />
+			<CommandFlag>DynamicVisibility</CommandFlag>
+			<Strings>
+				<ButtonText>Activate Block Selection</ButtonText>
+			</Strings>
+		</Button>
+
+		<Button guid="guidSelectBlocksPackageCmdSet" id="cmdidSelectLTHashHashGT" priority="0x0101" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
-        <Strings>
+			<CommandFlag>DynamicVisibility</CommandFlag>
+			<CommandFlag>DefaultDisabled</CommandFlag>
+		<Strings>
           <ButtonText>Select &lt;# ... #&gt;</ButtonText>
-            <CommandName>SelectLTHashHashGTI</CommandName>
-        </Strings>
-      </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectPaPaI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
-        <Icon guid="guidImages1" id="bmpPic1" />
-        <Strings>
-          <ButtonText>Select { ... }</ButtonText>
-            <CommandName>SelectPaPaI</CommandName>
-        </Strings>
-      </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectedTagI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
-        <Icon guid="guidImages2" id="bmpPic1" />
-        <Strings>
-          <ButtonText>Select &lt;AnyWord ... /AnyWord&gt; </ButtonText>
-            <CommandName>SelectedTagI</CommandName>
-        </Strings>
-      </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectRegionI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
-        <Icon guid="guidImages3" id="bmpPic1" />
-        <Strings>
-          <ButtonText>Select #region ... #endregion</ButtonText>
-            <CommandName>SelectRegionI</CommandName>
-        </Strings>
-      </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectCommentI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
-        <Icon guid="guidImages4" id="bmpPic1" />
-        <Strings>
-          <ButtonText>Select /* ... */</ButtonText>
-            <CommandName>SelectCommentI</CommandName>
-        </Strings>
-      </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectLTHashHashGTI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
-        <Icon guid="guidImages5" id="bmpPic1" />
-        <Strings>
-			<ButtonText>Reverse Select &lt;# ... #&gt;</ButtonText>
-            <CommandName>ReverseSelectLTHashHashGTI</CommandName>
+            <CommandName>cmdidSelectLTHashHashGT</CommandName>
 		</Strings>
       </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectCommentI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
+      <Button guid="guidSelectBlocksPackageCmdSet" id="cmdidSelectPaPa" priority="0x0102" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
+        <Icon guid="guidImages1" id="bmpPic1" />
+		  <CommandFlag>DynamicVisibility</CommandFlag>
+		  <CommandFlag>DefaultDisabled</CommandFlag>
+		  <Strings>
+          <ButtonText>Select { ... }</ButtonText>
+            <CommandName>cmdidSelectPaPa</CommandName>
+        </Strings>
+      </Button>
+      <Button guid="guidSelectBlocksPackageCmdSet" id="cmdidSelectedTag" priority="0x0103" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
+        <Icon guid="guidImages2" id="bmpPic1" />
+		  <CommandFlag>DynamicVisibility</CommandFlag>
+		  <CommandFlag>DefaultDisabled</CommandFlag>
+		  <Strings>
+          <ButtonText>Select &lt;AnyWord ... /AnyWord&gt; </ButtonText>
+            <CommandName>cmdidSelectedTag</CommandName>
+        </Strings>
+      </Button>
+      <Button guid="guidSelectBlocksPackageCmdSet" id="cmdidSelectRegion" priority="0x0104" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
+        <Icon guid="guidImages3" id="bmpPic1" />
+		  <CommandFlag>DynamicVisibility</CommandFlag>
+		  <CommandFlag>DefaultDisabled</CommandFlag>
+		  <Strings>
+          <ButtonText>Select #region ... #endregion</ButtonText>
+            <CommandName>cmdidSelectRegion</CommandName>
+        </Strings>
+      </Button>
+      <Button guid="guidSelectBlocksPackageCmdSet" id="cmdidSelectComment" priority="0x0105" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
+        <Icon guid="guidImages4" id="bmpPic1" />
+		  <CommandFlag>DynamicVisibility</CommandFlag>
+		  <CommandFlag>DefaultDisabled</CommandFlag>
+		  <Strings>
+          <ButtonText>Select /* ... */</ButtonText>
+            <CommandName>cmdidSelectComment</CommandName>
+        </Strings>
+      </Button>
+      <Button guid="guidSelectBlocksPackageCmdSet" id="cmdidReverseSelectLTHashHashGT" priority="0x0106" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
+        <Icon guid="guidImages5" id="bmpPic1" />
+		  <CommandFlag>DynamicVisibility</CommandFlag>
+		  <CommandFlag>DefaultDisabled</CommandFlag>
+		  <Strings>
+			<ButtonText>Reverse Select &lt;# ... #&gt;</ButtonText>
+            <CommandName>cmdidReverseSelectLTHashHashGT</CommandName>
+		</Strings>
+      </Button>
+      <Button guid="guidSelectBlocksPackageCmdSet" id="cmdidReverseSelectComment" priority="0x0107" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages6" id="bmpPic1" />
-        <Strings>
+		  <CommandFlag>DynamicVisibility</CommandFlag>
+		  <CommandFlag>DefaultDisabled</CommandFlag>
+		  <Strings>
 			<ButtonText>Reverse Select /* ... */</ButtonText>
-            <CommandName>ReverseSelectCommentI</CommandName>
+            <CommandName>cmdidReverseSelectComment</CommandName>
         </Strings>
       </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseReverseSelectedTagI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
+      <Button guid="guidSelectBlocksPackageCmdSet" id="cmdidReverseReverseSelectedTag" priority="0x0108" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages7" id="bmpPic1" />
-        <Strings>
+		  <CommandFlag>DynamicVisibility</CommandFlag>
+		  <CommandFlag>DefaultDisabled</CommandFlag>
+		  <Strings>
 			<ButtonText>Reverse Select &lt;AnyWord ... /AnyWord&gt; </ButtonText>
-            <CommandName>ReverseReverseSelectedTagI</CommandName>
+            <CommandName>cmdidReverseReverseSelectedTag</CommandName>
         </Strings>
       </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectParanthesisedBlockI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
+      <Button guid="guidSelectBlocksPackageCmdSet" id="cmdidReverseSelectParanthesisedBlock" priority="0x0109" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages8" id="bmpPic1" />
-        <Strings>
+		  <CommandFlag>DynamicVisibility</CommandFlag>
+		  <CommandFlag>DefaultDisabled</CommandFlag>
+		  <Strings>
 			<ButtonText>Reverse Select { ... }</ButtonText>
-            <CommandName>ReverseSelectParanthesisedBlockI</CommandName>
+            <CommandName>cmdidReverseSelectParanthesisedBlock</CommandName>
         </Strings>
       </Button>
-      <Button guid="guidSelectLTHashHashGTPackageCmdSet" id="ReverseSelectRegionI" priority="0x0100" type="Button">
-        <Parent guid="guidSelectLTHashHashGTPackageCmdSet" id="SelectOptionGroup" />
+      <Button guid="guidSelectBlocksPackageCmdSet" id="cmdidReverseSelectRegion" priority="0x010A" type="Button">
+        <Parent guid="guidSelectBlocksPackageCmdSet" id="SelectOptionGroup" />
         <Icon guid="guidImages9" id="bmpPic1" />
-        <Strings>
+		  <CommandFlag>DynamicVisibility</CommandFlag>
+		  <CommandFlag>DefaultDisabled</CommandFlag>
+		  <Strings>
 			<ButtonText>Reverse Select #region ... #endregion</ButtonText>
-            <CommandName>ReverseSelectRegionI</CommandName>
+            <CommandName>cmdidReverseSelectRegion</CommandName>
         </Strings>
       </Button>
     </Buttons>
@@ -173,6 +201,7 @@
       <Bitmap guid="guidImages8" href="Resources\ReverseSelectParanthesisedBlock.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
       <Bitmap guid="guidImages9" href="Resources\ReverseSelectRegion.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
       <!--<Bitmap guid="guidImages10" href="Resources\SelectOption.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />-->
+      <Bitmap guid="guidImages11" href="Resources\Command1.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
     </Bitmaps>
   </Commands>
 
@@ -181,19 +210,20 @@
     <GuidSymbol name="guidSelectLTHashHashGTPackage" value="{d0a577cf-be8c-44cf-9d0d-1223d56243d2}" />
 
     <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidSelectLTHashHashGTPackageCmdSet" value="{765c9d5b-9b9b-4e24-8310-11270bb6041e}">
-		<IDSymbol value="0x1020" name="SelectOptionGroup" />
-		<IDSymbol value="4127" name="SelectOptionI" />
-      <IDSymbol value="4129" name="SelectLTHashHashGTI" />
-      <IDSymbol value="4130" name="SelectPaPaI" />
-      <IDSymbol value="4131" name="SelectedTagI" />
-      <IDSymbol value="4132" name="SelectRegionI" />
-      <IDSymbol value="4133" name="SelectCommentI" />
-      <IDSymbol value="4134" name="ReverseSelectLTHashHashGTI" />
-      <IDSymbol value="4138" name="ReverseSelectCommentI" />
-      <IDSymbol value="4135" name="ReverseReverseSelectedTagI" />
-      <IDSymbol value="4136" name="ReverseSelectParanthesisedBlockI" />
-      <IDSymbol value="4137" name="ReverseSelectRegionI" />
+    <GuidSymbol name="guidSelectBlocksPackageCmdSet" value="{765c9d5b-9b9b-4e24-8310-11270bb6041e}">
+		<IDSymbol value="4126" name="cmdidBlockSelection" />
+		<IDSymbol value="4127" name="cmdidSelectOption" />
+		<IDSymbol value="4128" name="SelectOptionGroup" />
+		<IDSymbol value="4129" name="cmdidSelectLTHashHashGT" />
+      <IDSymbol value="4130" name="cmdidSelectPaPa" />
+      <IDSymbol value="4131" name="cmdidSelectedTag" />
+      <IDSymbol value="4132" name="cmdidSelectRegion" />
+      <IDSymbol value="4133" name="cmdidSelectComment" />
+      <IDSymbol value="4134" name="cmdidReverseSelectLTHashHashGT" />
+      <IDSymbol value="4138" name="cmdidReverseSelectComment" />
+      <IDSymbol value="4135" name="cmdidReverseReverseSelectedTag" />
+      <IDSymbol value="4136" name="cmdidReverseSelectParanthesisedBlock" />
+      <IDSymbol value="4137" name="cmdidReverseSelectRegion" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{74c6ae8d-34ef-4ba3-b945-807eeb1304a1}">
@@ -224,7 +254,7 @@
     </GuidSymbol>
   
   
-    <GuidSymbol name="guidImages3" value="{b99a85e4-7c5b-49fc-8783-6f75ef48e28f}" >
+    <GuidSymbol name="guidImages3" value="{b99a85e4-7c5b-49fc-8783-6f75ef48e28f}">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />
@@ -233,7 +263,7 @@
       <IDSymbol name="bmpPicStrikethrough" value="6" />
     </GuidSymbol>
   
-    <GuidSymbol  name="guidImages4" value="{7ccd2d81-7ceb-4f91-a915-4866fe30b675}">
+    <GuidSymbol name="guidImages4" value="{7ccd2d81-7ceb-4f91-a915-4866fe30b675}">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />
@@ -288,6 +318,16 @@
     </GuidSymbol>
   
     <GuidSymbol value="{db6b33ba-af05-48af-ade6-c6c5eb0b2b3f}" name="guidImages10">
+      <IDSymbol name="bmpPic1" value="1" />
+      <IDSymbol name="bmpPic2" value="2" />
+      <IDSymbol name="bmpPicSearch" value="3" />
+      <IDSymbol name="bmpPicX" value="4" />
+      <IDSymbol name="bmpPicArrows" value="5" />
+      <IDSymbol name="bmpPicStrikethrough" value="6" />
+    </GuidSymbol>
+  
+  
+    <GuidSymbol value="{b0ac194c-e129-48a6-b1af-3a8a90afc2d9}" name="guidImages11">
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />

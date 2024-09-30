@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.RpcContracts.Commands;
+﻿using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
@@ -9,56 +7,19 @@ using Microsoft.VisualStudio.TextManager.Interop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SelectLTHashHashGT
 {
     internal class Selector : Titler
     {
-        private readonly AsyncPackage package;
-        public Selector(AsyncPackage package) : base()
+        private readonly SelectBlocksPackage package;
+        public Selector(SelectBlocksPackage package) : base()
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
         }
-        public Selector(AsyncPackage package, string startTag, string endTag) : base(startTag, endTag)
+        public Selector(SelectBlocksPackage package, string startTag, string endTag) : base(startTag, endTag)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
-        }
-        private static MenuCommand selectOleMenuCommand = null;
-        public static MenuCommand SelectOleMenuCommand { get => selectOleMenuCommand; set => selectOleMenuCommand = value; }
-
-        private static IVsTextManager vIVsTextManager = null;
-        protected static IVsTextManager VIVsTextManager { get => vIVsTextManager; set => vIVsTextManager = value; }
-        protected static async Task<OleMenuCommandService> GetCommandServiceAsync(AsyncPackage package)
-        {
-            // Switch to the main thread - the call to AddCommand in SelectOption's constructor requires
-            // the UI thread.
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
-            OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (VIVsTextManager == null)
-                VIVsTextManager = await package.GetServiceAsync(typeof(SVsTextManager)) as IVsTextManager;
-            if (commandService != null && SelectOleMenuCommand == null)
-            {
-                //Guid selectGroupGuid = new Guid("{5EFC7975-14BC-11CF-9B2B-00AA00573819}"); // IDG_VS_EDIT_SELECT
-                //for (int i = 0; i < int.MaxValue; i++)
-                {
-                    // in C:\Program Files\Microsoft Visual Studio\2022\Community\VSSDK\VisualStudioIntegration\Common\Inc\vsshlids.h #define IDG_VS_EDIT_SELECT            0x012B in 
-                    // in C:\Program Files\Microsoft Visual Studio\2022\Community\VSSDK\VisualStudioIntegration\Common\Inc\stdidcmd.h #define cmdidSelectAll          31
-                    //CommandID menuCommandID = new CommandID(VsMenus.guidSHLMainMenu, 0x012B);// 
-                    //CommandID menuCommandID = new CommandID(VsMenus.guidStandardCommandSet2K, 31);// 
-                    //CommandID menuCommandID = new CommandID(VSConstants.GUID_VSStandardCommandSet97, (int)VSConstants.VSStd97CmdID.SelectAll);
-                    CommandID menuCommandID = new CommandID(VsMenus.guidStandardCommandSet97, 15);
-                    if (menuCommandID != null)
-                    {
-                        SelectOleMenuCommand = commandService.FindCommand(menuCommandID);
-                        //if (SelectOleMenuCommand != null)
-                        //    break;
-                    }
-                }
-            }
-            return commandService;
         }
 
         public AsyncPackage Package => package;
@@ -70,7 +31,11 @@ namespace SelectLTHashHashGT
             }
         }
 
+        public CommandID MenuCommandID { get => menuCommandID; set => menuCommandID = value; }
+        public OleMenuCommand MenuCommand { get => menuCommand; set => menuCommand = value; }
 
+        private CommandID menuCommandID = null;
+        private OleMenuCommand menuCommand = null;
         /// <summary>
         /// If you need to dynamically enable or disable a command based on certain conditions, you should use OleMenuCommand. For simpler scenarios where the command’s status does not change, MenuCommand might be sufficient.
         //Here’s a quick comparison:
@@ -78,18 +43,13 @@ namespace SelectLTHashHashGT
         //OleMenuCommand: Advanced command handling, supports dynamic status via BeforeQueryStatus.
         //Would you like an example of how to use OleMenuCommand in your extension?
         /// </summary>
-        /// <param name="commandService"></param>
-        /// <param name="CommandSet"></param>
-        /// <param name="CommandId"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        protected void AddCommand(OleMenuCommandService commandService, Guid CommandSet, int CommandId)
+        protected void AddCommand(Guid CommandSet, int CommandId)
         {
-            commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
-            var menuCommandID = new CommandID(CommandSet, CommandId);
-            var menuCommand = new OleMenuCommand(this.Execute, menuCommandID);
+            package.CommandService = package.CommandService ?? throw new ArgumentNullException(nameof(package.CommandService));
+            menuCommandID = new CommandID(CommandSet, CommandId);
+            menuCommand = new OleMenuCommand(this.Execute, menuCommandID);
             menuCommand.BeforeQueryStatus += DoBeforeQueryStatus;
-            menuCommand.Enabled = false;
-            commandService.AddCommand(menuCommand);
+            package.CommandService.AddCommand(menuCommand);
         }
         /// <summary>
         /// This function is the callback used to execute the command when the menu item is clicked.
@@ -103,21 +63,27 @@ namespace SelectLTHashHashGT
             ThreadHelper.ThrowIfNotOnUIThread();
             DoTheJob();
         }
+        protected IVsUserData GetVsUserData()
+        {
+            IVsUserData userData = null;
+            if (package.VIVsTextManager != null)
+            {
+                package.VIVsTextManager.GetActiveView(1, null, out IVsTextView vTextView);
+                userData = vTextView as IVsUserData;
+            }
+            return userData;
+        }
 
         protected IWpfTextView GetTextView()
         {
             IWpfTextView textView = null;
-            if (VIVsTextManager != null)// && sm is IVsTextManager vIVsTextManager)
+            var userData = GetVsUserData();
+            if (userData != null)
             {
-                vIVsTextManager.GetActiveView(1, null, out IVsTextView vTextView);
-                var userData = vTextView as IVsUserData;
-                if (userData != null)
-                {
-                    var guidViewHost = DefGuidList.guidIWpfTextViewHost;
-                    userData.GetData(ref guidViewHost, out var holder);
-                    var viewHost = (IWpfTextViewHost)holder;
-                    textView = viewHost.TextView;
-                }
+                var guidViewHost = DefGuidList.guidIWpfTextViewHost;
+                userData.GetData(ref guidViewHost, out var holder);
+                var viewHost = (IWpfTextViewHost)holder;
+                textView = viewHost.TextView;
             }
             return textView;
         }
@@ -217,7 +183,7 @@ namespace SelectLTHashHashGT
             }
         }
 
-        
+
         public virtual void DoTheJob()
         {
             IWpfTextView textView = GetTextView();
@@ -254,15 +220,16 @@ namespace SelectLTHashHashGT
             var command = sender as OleMenuCommand;
             if (command != null)
             {
-                if (SelectOleMenuCommand == null)
+                if (command.CommandID.ID == package.VBlockSelection.menuCommandID.ID)
                 {
-                    // works fine
-                    IWpfTextView textView = GetTextView();
-                    command.Enabled = textView != null;
+                    command.Enabled = GetVsUserData() != null;
+                    package.ReferenceMenuCommand = this.MenuCommand;
+                    //command.Visible = false; // DoTheJob() has made it invisible
                 }
-                else
+                else if (package.ReferenceMenuCommand != null)
                 {
-                    command.Enabled = SelectOleMenuCommand.Enabled;
+                    command.Enabled = package.ReferenceMenuCommand.Enabled;
+                    command.Visible = command.Enabled;
                 }
             }
         }

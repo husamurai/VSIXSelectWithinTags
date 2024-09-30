@@ -1,9 +1,4 @@
-﻿using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
-using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.TextManager.Interop;
+﻿using Microsoft.VisualStudio.Text;
 using System;
 using System.Collections.Generic;
 
@@ -11,10 +6,10 @@ namespace SelectLTHashHashGT
 {
     internal class SelectorReverse : Selector
     {
-        public SelectorReverse(AsyncPackage package) : base(package)
+        public SelectorReverse(SelectBlocksPackage package) : base(package)
         {
         }
-        public SelectorReverse(AsyncPackage package, string startTag, string endTag) : base(package,startTag, endTag)
+        public SelectorReverse(SelectBlocksPackage package, string startTag, string endTag) : base(package, startTag, endTag)
         {
         }
 
@@ -56,7 +51,7 @@ namespace SelectLTHashHashGT
 
             if (tagStack.Count == 0)
             {
-                return new SnapshotSpan(snapshot, new Span(current_start, (finishIndex + EndTag.Length) - current_start ));
+                return new SnapshotSpan(snapshot, new Span(current_start, (finishIndex + EndTag.Length) - current_start));
             }
             ShowMsg("No matching end tag found!");
 
@@ -64,7 +59,7 @@ namespace SelectLTHashHashGT
             void Progress(int s)
             {
                 if (s > 0)
-                    current_start = (tagStack.Count >  0) ?  --s : s ;
+                    current_start = (tagStack.Count > 0) ? --s : s;
                 else
                     current_start = 0;
             }

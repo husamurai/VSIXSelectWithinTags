@@ -48,6 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BlockSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReverseSelectComment.cs" />
     <Compile Include="ReverseSelectedTag.cs" />
@@ -60,7 +61,7 @@
     <Compile Include="SelectRegion.cs" />
     <Compile Include="SelectedTag.cs" />
     <Compile Include="SelectLTHashHashGT.cs" />
-    <Compile Include="SelectLTHashHashGTPackage.cs" />
+    <Compile Include="SelectBlocksPackage.cs" />
     <Compile Include="Selector.cs" />
     <Compile Include="SelectParanthesisedBlock.cs" />
     <Compile Include="Titler.cs" />
@@ -92,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Google Profile.ico" />
+    <Content Include="Resources\Command1.png" />
     <Content Include="Resources\Region.png" />
     <Content Include="Resources\ReverseSelectComment.png" />
     <Content Include="Resources\ReverseSelectedTag.png" />

@@ -1,27 +1,35 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
+using System;
+using System.ComponentModel.Design;
+using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace SelectLTHashHashGT
 {
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class SelectOption : Selector
+    internal sealed class BlockSelection : Selector
     {
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 4127;
+        public const int CommandId = 4126;
 
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
         public static readonly Guid CommandSet = new Guid("765c9d5b-9b9b-4e24-8310-11270bb6041e");
-        public SelectOption(SelectBlocksPackage package) : base(package)
+        public BlockSelection(SelectBlocksPackage package) : base(package)
         {
             AddCommand(CommandSet, CommandId);
         }
         public override void DoTheJob()
         {
+            this.MenuCommand.Visible = false;
         } // do nothing
     }
 }
